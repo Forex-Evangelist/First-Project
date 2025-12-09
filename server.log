@@ -180,3 +180,9 @@ User signed in: {
  GET /favicon.ico 200 in 314ms
  ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
  GET /dashboard 200 in 1131ms
+ ✓ Compiled in 334ms
+ ○ Compiling /investment-plans ...
+ ✓ Compiled /investment-plans in 589ms
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /investment-plans 200 in 1243ms
+ GET /signup?plan=medium-term 200 in 263ms
