@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { firstName, lastName, email, phone, initialInvestment, password, confirmPassword, agreeTerms } = body
 
-    // Validate required fields
+    // Validation
     if (!firstName || !lastName || !email || !phone || !initialInvestment || !password || !confirmPassword) {
       return NextResponse.json(
         { error: 'All fields are required' },
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate email format
+    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate passwords match
+    // Password validation
     if (password !== confirmPassword) {
       return NextResponse.json(
         { error: 'Passwords do not match' },
@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate password length
     if (password.length < 6) {
       return NextResponse.json(
         { error: 'Password must be at least 6 characters' },
@@ -38,16 +37,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate minimum investment
+    // Investment validation
     const investmentAmount = parseFloat(initialInvestment)
-    if (investmentAmount < 50) {
+    if (isNaN(investmentAmount) || investmentAmount < 50) {
       return NextResponse.json(
         { error: 'Minimum investment is GHS 50' },
         { status: 400 }
       )
     }
 
-    // Validate terms agreement
+    // Terms validation
     if (!agreeTerms) {
       return NextResponse.json(
         { error: 'You must agree to the terms and conditions' },
@@ -55,27 +54,35 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Log the signup
-    console.log('New signup:', { firstName, lastName, email, phone, initialInvestment })
+    // Generate user ID
+    const userId = `WB${Date.now()}${Math.random().toString(36).substr(2, 9).toUpperCase()}`
 
-    // In production, you would:
-    // 1. Hash the password
-    // 2. Store user in database
-    // 3. Send verification email
-    // 4. Create investment account
+    // Create user object
+    const user = {
+      id: userId,
+      firstName,
+      lastName,
+      email,
+      phone,
+      initialInvestment: investmentAmount,
+      createdAt: new Date().toISOString(),
+      status: 'active'
+    }
 
+    console.log('New user created:', user)
+
+    // Return success response with user data
     return NextResponse.json(
-      { 
-        success: true, 
-        message: 'Account created successfully! Welcome to Wealth Builders Ghana.',
-        userId: `user_${Date.now()}`
+      {
+        message: 'Account created successfully',
+        user: user
       },
-      { status: 200 }
+      { status: 201 }
     )
   } catch (error) {
     console.error('Signup error:', error)
     return NextResponse.json(
-      { error: 'Failed to create account' },
+      { error: 'An error occurred during signup' },
       { status: 500 }
     )
   }
