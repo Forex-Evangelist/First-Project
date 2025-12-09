@@ -132,3 +132,38 @@ New user created: {
  ○ Compiling /dashboard ...
  ✓ Compiled /dashboard in 677ms
  GET /dashboard 200 in 793ms
+ ○ Compiling /signin ...
+ ✓ Compiled /signin in 534ms
+ GET /signin 200 in 634ms
+ GET /signin 200 in 181ms
+ GET /signin 200 in 187ms
+ GET /favicon.ico 200 in 283ms
+ GET /signup 200 in 110ms
+ GET /signin 200 in 100ms
+ ✓ Compiled /api/signin in 161ms
+User signed in: {
+  id: 'WB1765303856806',
+  email: 'ngilbert688@gmail.com',
+  firstName: 'User',
+  lastName: 'Account',
+  phone: '+233 000 000 000',
+  initialInvestment: 0,
+  createdAt: '2025-12-09T18:10:56.806Z',
+  status: 'active'
+}
+ POST /api/signin 200 in 431ms
+ GET /dashboard 200 in 117ms
+ ✓ Compiled in 242ms
+ ✓ Compiled in 239ms
+ ✓ Compiled in 193ms
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /dashboard 200 in 648ms
+ GET /favicon.ico 200 in 387ms
+ ○ Compiling /dashboard/portfolio ...
+ ✓ Compiled /dashboard/portfolio in 550ms
+ GET /dashboard/portfolio 200 in 651ms
+ GET /signup 200 in 122ms
+ GET /dashboard 200 in 162ms
+ ○ Compiling /dashboard/reports ...
+ ✓ Compiled /dashboard/reports in 503ms
+ GET /dashboard/reports 200 in 586ms

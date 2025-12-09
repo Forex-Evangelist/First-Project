@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card'
 import { ArrowUpRight, ArrowDownLeft, TrendingUp, Wallet, Settings, LogOut, Bell, Eye, EyeOff, Download, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface UserData {
   id: string
@@ -18,6 +19,7 @@ interface UserData {
 }
 
 export default function Dashboard() {
+  const router = useRouter()
   const [userData, setUserData] = useState<UserData | null>(null)
   const [showBalance, setShowBalance] = useState(true)
   const [loading, setLoading] = useState(true)
@@ -38,7 +40,7 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem('user')
-    window.location.href = '/'
+    router.push('/')
   }
 
   if (loading) {
@@ -292,15 +294,21 @@ export default function Dashboard() {
               <Card className="p-6 border-0 shadow-lg">
                 <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
                 <div className="space-y-3">
-                  <button className="w-full px-4 py-3 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold rounded-lg transition">
-                    View Full Portfolio
-                  </button>
-                  <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold rounded-lg transition">
-                    Contact Advisor
-                  </button>
-                  <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold rounded-lg transition">
-                    View Reports
-                  </button>
+                  <Link href="/dashboard/portfolio" className="block">
+                    <button className="w-full px-4 py-3 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold rounded-lg transition">
+                      View Full Portfolio
+                    </button>
+                  </Link>
+                  <Link href="/dashboard/advisor" className="block">
+                    <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold rounded-lg transition">
+                      Contact Advisor
+                    </button>
+                  </Link>
+                  <Link href="/dashboard/reports" className="block">
+                    <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold rounded-lg transition">
+                      View Reports
+                    </button>
+                  </Link>
                 </div>
               </Card>
 
