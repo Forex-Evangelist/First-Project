@@ -299,11 +299,6 @@ export default function Dashboard() {
                       View Full Portfolio
                     </button>
                   </Link>
-                  <Link href="/dashboard/advisor" className="block">
-                    <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold rounded-lg transition">
-                      Contact Advisor
-                    </button>
-                  </Link>
                   <Link href="/dashboard/reports" className="block">
                     <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold rounded-lg transition">
                       View Reports

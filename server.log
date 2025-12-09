@@ -167,3 +167,16 @@ User signed in: {
  ○ Compiling /dashboard/reports ...
  ✓ Compiled /dashboard/reports in 503ms
  GET /dashboard/reports 200 in 586ms
+ GET /dashboard 200 in 145ms
+ GET /favicon.ico 200 in 267ms
+ GET /dashboard/portfolio 200 in 110ms
+ GET /dashboard 200 in 333ms
+ ○ Compiling /dashboard/advisor ...
+ ✓ Compiled /dashboard/advisor in 643ms
+ GET /dashboard/advisor 200 in 737ms
+ GET /dashboard/reports 200 in 112ms
+ ✓ Compiled in 164ms
+ GET /dashboard/reports 200 in 182ms
+ GET /favicon.ico 200 in 314ms
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /dashboard 200 in 1131ms
