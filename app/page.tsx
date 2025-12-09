@@ -10,6 +10,16 @@ import { useState } from 'react'
 export default function Home() {
   // State for FAQ accordion
   const [openFAQ, setOpenFAQ] = useState<number | null>(0)
+  
+  // State for contact form
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  })
+  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [formMessage, setFormMessage] = useState('')
 
   // Testimonials data
   const testimonials = [
@@ -72,6 +82,58 @@ export default function Home() {
     }
   ]
 
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  // Handle form submission
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setFormStatus('loading')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setFormStatus('success')
+        setFormMessage(data.message)
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          setFormStatus('idle')
+          setFormMessage('')
+        }, 3000)
+      } else {
+        setFormStatus('error')
+        setFormMessage(data.error || 'Failed to send message')
+      }
+    } catch (error) {
+      setFormStatus('error')
+      setFormMessage('An error occurred. Please try again.')
+    }
+  }
+
+  // Handle Get Started button click
+  const handleGetStarted = () => {
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -94,7 +156,7 @@ export default function Home() {
             <a href="#faq" className="text-gray-600 hover:text-gray-900 transition">FAQ</a>
             <a href="#contact" className="text-gray-600 hover:text-gray-900 transition">Contact</a>
           </div>
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white">Get Started</Button>
+          <Button onClick={handleGetStarted} className="bg-blue-600 hover:bg-blue-700 text-white">Get Started</Button>
         </div>
       </nav>
 
@@ -110,7 +172,7 @@ export default function Home() {
                 Expert investment solutions designed specifically for Ghanaians. Build a secure financial future with transparent returns and professional guidance.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg h-12">
+                <Button onClick={handleGetStarted} size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg h-12">
                   Start Investing Today <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
                 <Button size="lg" variant="outline" className="text-lg h-12 border-gray-300">
@@ -352,7 +414,7 @@ export default function Home() {
           <p className="text-xl text-gray-600 mb-8">
             Join thousands of Ghanaians who are building wealth with Wealth Builders. Start with as little as GHS 50.
           </p>
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg h-12 px-8">
+          <Button onClick={handleGetStarted} size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg h-12 px-8">
             Open Your Account Today <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
         </div>
@@ -400,31 +462,64 @@ export default function Home() {
             <p className="text-gray-600 mb-6">
               Have questions? Our team is ready to help. Fill out the form below and we'll get back to you within 24 hours.
             </p>
-            <form className="space-y-4">
+            <form onSubmit={handleFormSubmit} className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <input
                   type="text"
+                  name="name"
                   placeholder="Your Name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
                 <input
                   type="email"
+                  name="email"
                   placeholder="Your Email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
               </div>
               <input
                 type="text"
+                name="subject"
                 placeholder="Subject"
+                value={formData.subject}
+                onChange={handleInputChange}
+                required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
               <textarea
+                name="message"
                 placeholder="Your Message"
                 rows={5}
+                value={formData.message}
+                onChange={handleInputChange}
+                required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
               ></textarea>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg h-12">
-                Send Message
+              
+              {formStatus === 'success' && (
+                <div className="p-4 bg-green-100 border border-green-300 rounded-lg text-green-800">
+                  ✓ {formMessage}
+                </div>
+              )}
+              
+              {formStatus === 'error' && (
+                <div className="p-4 bg-red-100 border border-red-300 rounded-lg text-red-800">
+                  ✗ {formMessage}
+                </div>
+              )}
+              
+              <Button 
+                type="submit"
+                disabled={formStatus === 'loading'}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg h-12"
+              >
+                {formStatus === 'loading' ? 'Sending...' : 'Send Message'}
               </Button>
             </form>
           </div>

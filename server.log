@@ -27,3 +27,15 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
  GET /favicon.ico 200 in 277ms
  GET / 200 in 309ms
  GET /favicon.ico 200 in 275ms
+ ✓ Compiled in 270ms
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET / 200 in 474ms
+ GET /favicon.ico 200 in 343ms
+ ✓ Compiled /api/contact in 264ms
+Contact form submission: {
+  name: 'John Doe',
+  email: 'john@example.com',
+  subject: 'John DoeInvestment Inquiry',
+  message: "I'm interested in starting an investment account with GHS 50. Can you provide more information?"
+}
+ POST /api/contact 200 in 570ms
