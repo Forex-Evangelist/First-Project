@@ -126,14 +126,6 @@ export default function Home() {
     }
   }
 
-  // Handle Get Started button click
-  const handleGetStarted = () => {
-    const contactSection = document.getElementById('contact')
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -156,7 +148,9 @@ export default function Home() {
             <a href="#faq" className="text-gray-600 hover:text-gray-900 transition">FAQ</a>
             <a href="#contact" className="text-gray-600 hover:text-gray-900 transition">Contact</a>
           </div>
-          <Button onClick={handleGetStarted} className="bg-blue-600 hover:bg-blue-700 text-white">Get Started</Button>
+          <Link href="/signup">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white">Get Started</Button>
+          </Link>
         </div>
       </nav>
 
@@ -172,9 +166,11 @@ export default function Home() {
                 Expert investment solutions designed specifically for Ghanaians. Build a secure financial future with transparent returns and professional guidance.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button onClick={handleGetStarted} size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg h-12">
-                  Start Investing Today <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
+                <Link href="/signup">
+                  <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg h-12">
+                    Start Investing Today <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                </Link>
                 <Button size="lg" variant="outline" className="text-lg h-12 border-gray-300">
                   Learn More
                 </Button>
@@ -414,9 +410,11 @@ export default function Home() {
           <p className="text-xl text-gray-600 mb-8">
             Join thousands of Ghanaians who are building wealth with Wealth Builders. Start with as little as GHS 50.
           </p>
-          <Button onClick={handleGetStarted} size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg h-12 px-8">
-            Open Your Account Today <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
+          <Link href="/signup">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg h-12 px-8">
+              Open Your Account Today <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </Link>
         </div>
       </section>
 
