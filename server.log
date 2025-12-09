@@ -199,3 +199,18 @@ User signed in: {
  GET /favicon.ico 200 in 280ms
  GET /investment-plans 200 in 250ms
  GET /investment-plans 200 in 111ms
+ GET / 200 in 439ms
+ GET /signup 200 in 120ms
+ GET / 200 in 105ms
+ GET /signup?plan=short-term 200 in 433ms
+ GET /dashboard 200 in 222ms
+ ✓ Compiled in 577ms
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /dashboard 200 in 773ms
+ GET /dashboard 200 in 186ms
+ GET /favicon.ico 200 in 280ms
+ GET /dashboard/portfolio 200 in 147ms
+ ✓ Compiled in 296ms
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /dashboard 200 in 599ms
+ GET /favicon.ico 200 in 272ms

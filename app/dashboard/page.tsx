@@ -3,7 +3,29 @@
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { ArrowUpRight, ArrowDownLeft, TrendingUp, Wallet, Settings, LogOut, Bell, Eye, EyeOff, Download, Plus, Briefcase } from 'lucide-react'
+import { 
+  ArrowUpRight, 
+  ArrowDownLeft, 
+  TrendingUp, 
+  Wallet, 
+  Settings, 
+  LogOut, 
+  Bell, 
+  Eye, 
+  EyeOff, 
+  Download, 
+  Plus, 
+  Briefcase,
+  Clock,
+  DollarSign,
+  Target,
+  ChevronRight,
+  BarChart3,
+  Zap,
+  Calendar,
+  PieChart,
+  AlertCircle
+} from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -68,6 +90,78 @@ export default function Dashboard() {
     )
   }
 
+  // Determine current plan based on investment amount
+  const getPlanDetails = () => {
+    const amount = userData.initialInvestment;
+    if (amount >= 1000) {
+      return {
+        id: 'long-term',
+        name: 'Long-Term Capital',
+        duration: 'Up to 1 year',
+        investmentRange: 'GHS 1,000+',
+        returnPercentage: '8-12% per month',
+        totalReturn: '96-144% total',
+        icon: Target,
+        color: 'from-green-500 to-emerald-500',
+        bgColor: 'bg-green-50',
+        borderColor: 'border-green-200',
+        textColor: 'text-green-600',
+        // Long-term portfolio: More conservative, focus on stability
+        portfolio: [
+          { name: 'Bonds', percentage: 40, color: 'bg-green-600', description: 'Government & Corporate Bonds' },
+          { name: 'Real Estate', percentage: 30, color: 'bg-blue-600', description: 'Real Estate Investment Trusts' },
+          { name: 'Stocks', percentage: 20, color: 'bg-purple-600', description: 'Blue-chip Stocks' },
+          { name: 'Cash', percentage: 10, color: 'bg-yellow-600', description: 'Money Market Funds' }
+        ]
+      };
+    }
+    if (amount >= 300) {
+      return {
+        id: 'medium-term',
+        name: 'Medium-Term Equity',
+        duration: '3-6 months',
+        investmentRange: 'GHS 300 - GHS 1,000',
+        returnPercentage: '5-8% per month',
+        totalReturn: '15-48% total',
+        icon: TrendingUp,
+        color: 'from-blue-500 to-cyan-500',
+        bgColor: 'bg-blue-50',
+        borderColor: 'border-blue-200',
+        textColor: 'text-blue-600',
+        // Medium-term portfolio: Balanced approach
+        portfolio: [
+          { name: 'Stocks', percentage: 45, color: 'bg-blue-600', description: 'Growth Stocks & Equities' },
+          { name: 'Bonds', percentage: 30, color: 'bg-green-600', description: 'Fixed Income Securities' },
+          { name: 'Real Estate', percentage: 15, color: 'bg-purple-600', description: 'Property Investments' },
+          { name: 'Cash', percentage: 10, color: 'bg-yellow-600', description: 'Liquid Reserves' }
+        ]
+      };
+    }
+    // Short-term
+    return {
+      id: 'short-term',
+      name: 'Short-Term Growth',
+      duration: '1-3 months',
+      investmentRange: 'GHS 50 - GHS 300',
+      returnPercentage: '2-5% per month',
+      totalReturn: '6-15% total',
+      icon: Zap,
+      color: 'from-orange-500 to-red-500',
+      bgColor: 'bg-orange-50',
+      borderColor: 'border-orange-200',
+      textColor: 'text-orange-600',
+      // Short-term portfolio: High growth, more aggressive
+      portfolio: [
+        { name: 'Stocks', percentage: 60, color: 'bg-blue-600', description: 'High-Growth Stocks' },
+        { name: 'Bonds', percentage: 20, color: 'bg-green-600', description: 'Short-term Bonds' },
+        { name: 'Cash', percentage: 15, color: 'bg-yellow-600', description: 'Money Market' },
+        { name: 'Commodities', percentage: 5, color: 'bg-red-600', description: 'Commodity Futures' }
+      ]
+    };
+  }
+
+  const currentPlan = getPlanDetails();
+
   // Mock portfolio data
   const portfolioValue = userData.initialInvestment * 1.25 // Simulated 25% growth
   const totalGain = portfolioValue - userData.initialInvestment
@@ -92,12 +186,52 @@ export default function Dashboard() {
     }
   ]
 
-  const portfolioBreakdown = [
-    { name: 'Stocks', percentage: 40, color: 'bg-blue-600' },
-    { name: 'Bonds', percentage: 30, color: 'bg-green-600' },
-    { name: 'Real Estate', percentage: 20, color: 'bg-purple-600' },
-    { name: 'Cash', percentage: 10, color: 'bg-yellow-600' }
+  // Performance metrics based on current plan
+  const performanceMetrics = [
+    { name: 'Monthly Return', value: currentPlan.returnPercentage, icon: TrendingUp, color: 'text-green-600' },
+    { name: 'Total Return', value: currentPlan.totalReturn, icon: BarChart3, color: 'text-blue-600' },
+    { name: 'Investment Term', value: currentPlan.duration, icon: Calendar, color: 'text-purple-600' },
+    { name: 'Portfolio Assets', value: `${currentPlan.portfolio.length} Classes`, icon: PieChart, color: 'text-orange-600' }
   ]
+
+  // Investment plans for comparison
+  const investmentPlans = [
+    {
+      id: 'short-term',
+      name: 'Short-Term Growth',
+      duration: '1-3 months',
+      returnPercentage: '2-5% per month',
+      icon: Zap,
+      color: 'from-orange-500 to-red-500',
+      bgColor: 'bg-orange-50',
+      borderColor: 'border-orange-200',
+      textColor: 'text-orange-600'
+    },
+    {
+      id: 'medium-term',
+      name: 'Medium-Term Equity',
+      duration: '3-6 months',
+      returnPercentage: '5-8% per month',
+      icon: TrendingUp,
+      color: 'from-blue-500 to-cyan-500',
+      bgColor: 'bg-blue-50',
+      borderColor: 'border-blue-200',
+      textColor: 'text-blue-600'
+    },
+    {
+      id: 'long-term',
+      name: 'Long-Term Capital',
+      duration: 'Up to 1 year',
+      returnPercentage: '8-12% per month',
+      icon: Target,
+      color: 'from-green-500 to-emerald-500',
+      bgColor: 'bg-green-50',
+      borderColor: 'border-green-200',
+      textColor: 'text-green-600'
+    }
+  ]
+
+  const CurrentPlanIcon = currentPlan.icon;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -143,6 +277,44 @@ export default function Dashboard() {
             <p className="text-gray-600 mt-2">Here's your investment overview</p>
           </div>
 
+          {/* Current Plan Card */}
+          <Card className={`p-6 border-0 shadow-lg mb-8 ${currentPlan.bgColor} border ${currentPlan.borderColor}`}>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className={`p-2 rounded-lg bg-gradient-to-r ${currentPlan.color} text-white`}>
+                    <CurrentPlanIcon className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Your Current Plan</p>
+                    <h2 className="text-xl font-bold text-gray-900">{currentPlan.name}</h2>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-600">Investment Amount</p>
+                    <p className="font-bold text-gray-900">GHS {userData.initialInvestment.toFixed(2)}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Monthly Return</p>
+                    <p className="font-bold text-gray-900">{currentPlan.returnPercentage}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link href="/investment-plans">
+                  <Button variant="outline" className="border-gray-300">
+                    Upgrade Plan
+                  </Button>
+                </Link>
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Funds
+                </Button>
+              </div>
+            </div>
+          </Card>
+
           {/* Portfolio Summary Cards */}
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             {/* Total Balance Card */}
@@ -185,30 +357,43 @@ export default function Dashboard() {
             </Card>
           </div>
 
-          {/* Action Buttons */}
-          <div className="grid md:grid-cols-2 gap-4 mb-8">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white h-12 text-base">
-              <Plus className="w-5 h-5 mr-2" />
-              Add Funds
-            </Button>
-            <Button variant="outline" className="h-12 text-base border-gray-300">
-              <Download className="w-5 h-5 mr-2" />
-              Download Statement
-            </Button>
-          </div>
+          {/* Performance Metrics */}
+          <Card className="p-6 border-0 shadow-lg mb-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Performance Metrics</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {performanceMetrics.map((metric, index) => (
+                <div key={index} className="flex flex-col items-center text-center p-4 rounded-lg bg-gray-50">
+                  <metric.icon className={`w-8 h-8 ${metric.color} mb-3`} />
+                  <p className="font-bold text-gray-900 text-lg">{metric.value}</p>
+                  <p className="text-sm text-gray-600">{metric.name}</p>
+                </div>
+              ))}
+            </div>
+          </Card>
 
           {/* Main Content Grid */}
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Left Column - Portfolio Breakdown */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Portfolio Breakdown */}
+              {/* Portfolio Breakdown - Plan-Specific */}
               <Card className="p-6 border-0 shadow-lg">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Portfolio Breakdown</h2>
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-xl font-bold text-gray-900">Portfolio Breakdown</h2>
+                    <p className="text-sm text-gray-600 mt-1">{currentPlan.name} Strategy</p>
+                  </div>
+                  <div className={`p-2 rounded-lg bg-gradient-to-r ${currentPlan.color} text-white`}>
+                    <PieChart className="w-5 h-5" />
+                  </div>
+                </div>
                 <div className="space-y-4">
-                  {portfolioBreakdown.map((item, index) => (
+                  {currentPlan.portfolio.map((item, index) => (
                     <div key={index}>
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-gray-700 font-medium">{item.name}</span>
+                        <div>
+                          <span className="text-gray-700 font-medium">{item.name}</span>
+                          <p className="text-xs text-gray-500">{item.description}</p>
+                        </div>
                         <span className="text-gray-900 font-bold">{item.percentage}%</span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
@@ -219,6 +404,17 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ))}
+                </div>
+                <div className={`mt-6 p-4 rounded-lg ${currentPlan.bgColor} border ${currentPlan.borderColor}`}>
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className={`w-5 h-5 ${currentPlan.textColor} flex-shrink-0 mt-0.5`} />
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">Plan-Specific Allocation</p>
+                      <p className="text-xs text-gray-600 mt-1">
+                        This portfolio allocation is optimized for your {currentPlan.name} investment plan to maximize returns within your investment timeframe.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </Card>
 
@@ -259,7 +455,7 @@ export default function Dashboard() {
               </Card>
             </div>
 
-            {/* Right Column - Account Info */}
+            {/* Right Column - Account Info & Plans */}
             <div className="space-y-8">
               {/* Account Information */}
               <Card className="p-6 border-0 shadow-lg">
@@ -291,6 +487,45 @@ export default function Dashboard() {
                       })}
                     </p>
                   </div>
+                </div>
+              </Card>
+
+              {/* Other Investment Plans */}
+              <Card className="p-6 border-0 shadow-lg">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold text-gray-900">Other Plans</h2>
+                  <Link href="/investment-plans">
+                    <Button variant="ghost" className="text-blue-600 hover:text-blue-700 p-0 h-auto">
+                      View All
+                      <ChevronRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  </Link>
+                </div>
+                <div className="space-y-4">
+                  {investmentPlans
+                    .filter(plan => plan.id !== currentPlan.id)
+                    .map((plan, index) => (
+                      <Link href={`/investment-plans?plan=${plan.id}`} key={index}>
+                        <div className={`p-4 rounded-lg ${plan.bgColor} border ${plan.borderColor} hover:shadow-md transition cursor-pointer`}>
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className={`p-1.5 rounded-lg bg-gradient-to-r ${plan.color} text-white`}>
+                              <plan.icon className="w-4 h-4" />
+                            </div>
+                            <h3 className="font-bold text-gray-900">{plan.name}</h3>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 mt-3 text-sm">
+                            <div>
+                              <p className="text-gray-600">Duration</p>
+                              <p className="font-semibold text-gray-900">{plan.duration}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-600">Monthly Return</p>
+                              <p className="font-semibold text-gray-900">{plan.returnPercentage}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
                 </div>
               </Card>
 
