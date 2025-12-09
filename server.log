@@ -214,3 +214,12 @@ User signed in: {
  ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
  GET /dashboard 200 in 599ms
  GET /favicon.ico 200 in 272ms
+ GET /dashboard/portfolio 200 in 179ms
+ GET /favicon.ico 200 in 282ms
+ GET /dashboard 200 in 108ms
+ GET /dashboard/portfolio 200 in 177ms
+ GET /dashboard/reports 200 in 132ms
+ ✓ Compiled in 298ms
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /dashboard/portfolio 200 in 687ms
+ GET /favicon.ico 200 in 277ms
