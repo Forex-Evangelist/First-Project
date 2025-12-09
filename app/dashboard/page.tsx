@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { ArrowUpRight, ArrowDownLeft, TrendingUp, Wallet, Settings, LogOut, Bell, Eye, EyeOff, Download, Plus } from 'lucide-react'
+import { ArrowUpRight, ArrowDownLeft, TrendingUp, Wallet, Settings, LogOut, Bell, Eye, EyeOff, Download, Plus, Briefcase } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -115,6 +115,10 @@ export default function Dashboard() {
             <span className="text-xl font-bold text-gray-900">Wealth Builders</span>
           </div>
           <div className="flex items-center gap-4">
+            <Link href="/investment-plans" className="text-gray-600 hover:text-gray-900 transition font-semibold flex items-center gap-2">
+              <Briefcase className="w-5 h-5" />
+              Investment Plans
+            </Link>
             <button className="p-2 hover:bg-gray-100 rounded-lg transition">
               <Bell className="w-5 h-5 text-gray-600" />
             </button>
@@ -302,6 +306,12 @@ export default function Dashboard() {
                   <Link href="/dashboard/reports" className="block">
                     <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold rounded-lg transition">
                       View Reports
+                    </button>
+                  </Link>
+                  <Link href="/investment-plans" className="block">
+                    <button className="w-full px-4 py-3 bg-green-50 hover:bg-green-100 text-green-600 font-semibold rounded-lg transition flex items-center justify-center gap-2">
+                      <Briefcase className="w-4 h-4" />
+                      View Investment Plans
                     </button>
                   </Link>
                 </div>
